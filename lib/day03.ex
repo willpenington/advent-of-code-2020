@@ -37,20 +37,17 @@ defmodule AdventOfCode.Day03 do
     Enum.at(row, rem(offset, length(row)))
   end
 
-  def calculate_route(map, right, down) do
-    acc = fn row, {offset, total} ->
-      total = case lookup_pos(row, offset) do
-        :open -> total
-        :tree -> total + 1
-      end
-      {total, {offset + right, total}}
+  def calculate_route(map, right, down, offset \\ 0, total \\ 0)
+  def calculate_route([], _, _, _, total), do: total
+  def calculate_route([row | tail], right, down, offset, total) do
+    new_total = case lookup_pos(row, offset) do
+      :open -> total
+      :tree -> total + 1
     end
 
+    map = Enum.drop(tail, down - 1)
 
-    {_, {_, total}} = Enum.take_every(map, down)
-    |> Enum.map_reduce({0, 0}, acc)
-
-    total
+    calculate_route(map, right, down, offset + right, new_total)
   end
 
 end
