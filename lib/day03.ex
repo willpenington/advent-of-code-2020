@@ -10,8 +10,8 @@ defmodule AdventOfCode.Day03 do
   ]
 
   def process() do
-    map = Util.load_input(["priv", "day03", "input"])
-    |> Stream.map(&parse_row/1)
+    map = Util.load_line_delimited_input(["priv", "day03", "input"])
+    |> Enum.map(&parse_row/1)
     |> Enum.to_list()
 
     totals = for {right, down} <- @routes do
