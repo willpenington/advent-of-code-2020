@@ -1,9 +1,14 @@
-Advent Of Code
+Advent Of Code 2020
 ============
 
 Solutions to [Advent of Code 2020](https://adventofcode.com/2020/) in Elixir
 
 ## Getting Started
+
+To run the code in this repo you will need the Erlang and Elixir runtimes 
+installed. Visit https://elixir-lang.org/install.html for platform specific
+instructions.
+
 The main solutions are in the `lib` directory with a file for each day. There are
 tests covering some days in the test directory.  The module for each day contains 
 a method called `process()` that will load the input, calculate the anwser and 
@@ -31,7 +36,8 @@ not have "proper" tests if they would just be duplicates.
 
 ## Documentation
 The level of documentation varies by day, but the documentation that exists can
-be parsed by ExDoc to produce friendly HTML (and ePub). 
+be parsed by [ExDoc](https://github.com/elixir-lang/ex_doc) to produce user 
+friendly HTML (and ePub). 
 
 To generate the documentation run the following commands:
   - `mix deps.get` to download ExDoc. This may prompt you to install Hex, Elixir's package manager, type `y` if prompted.
@@ -49,6 +55,6 @@ Erlang tool Dialyzer.
 
 To install Dialixier run `mix deps.get` and `mix deps.compile` if you haven't for 
 ExDoc and to run a type check run `mix dialyzer`. The first time you run it will
-be very slow as it builds a large amount of caching.
+be very slow as it generates a large amount of cached data.
 
 
