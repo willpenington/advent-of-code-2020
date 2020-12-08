@@ -17,6 +17,9 @@ defmodule AdventOfCode.Day08 do
 
   @day_number 8
 
+  @type opcode :: :nop | :acc | :jmp
+  @type instruction :: {opcode(), integer()}
+
   @doc ~S"""
   Calculate and print the answers to both parts of the question
   """
@@ -34,6 +37,7 @@ defmodule AdventOfCode.Day08 do
 
   Get the value of the accumulator when the program enters an infinite loop.
   """
+  @spec part1([instruction()]) :: integer()
   def part1(instructions) do
     {:loop, acc, _pc} = execute(instructions)
     acc
@@ -45,6 +49,7 @@ defmodule AdventOfCode.Day08 do
   Get the value of the accumualtor when the program runs to completion after
   swapping a single instruction from `jmp` to `nop` or vice versa.
   """
+  @spec part2([instruction()]) :: integer()
   def part2(instructions) do
     {_, result} = find_swap(instructions)
     result
@@ -53,6 +58,7 @@ defmodule AdventOfCode.Day08 do
   @doc ~S"""
   Load and parse instructions from the input file.
   """
+  @spec load_data() :: [instruction()]
   def load_data() do
     Util.find_input(@day_number)
     |> Util.load_line_delimited_input()
@@ -70,6 +76,7 @@ defmodule AdventOfCode.Day08 do
       iex> AdventOfCode.Day08.parse_line("nop -5")
       {:nop, -5}
   """
+  @spec parse_line(String.t()) :: instruction()
   def parse_line(<<instruction::binary-size(3), " ", value::binary>>) do
     case instruction do
       "jmp" -> {:jmp, String.to_integer(value)}
@@ -78,6 +85,7 @@ defmodule AdventOfCode.Day08 do
     end
   end
 
+  @spec execute_internal([instruction()], integer(), integer(), [integer()]) :: {({:loop, integer(), integer()} | {:term, integer()}), [integer()]}
   defp execute_internal(instructions, acc, pc, seen) do
     if pc in seen do
       {{:loop, acc, pc}, seen}
@@ -113,6 +121,7 @@ defmodule AdventOfCode.Day08 do
       {:term, 8}
 
   """
+  @spec execute([instruction()]) :: {:loop, integer(), integer()} | {:term, integer()}
   def execute(instructions) do
     {result, _trace} = execute_internal(instructions, 0, 0, [])
     result
@@ -127,11 +136,13 @@ defmodule AdventOfCode.Day08 do
       iex> AdventOfCode.Day08.trace([{:nop, 0}, {:acc, 1}, {:jmp, 4}, {:acc, 3}, {:jmp, -3}, {:acc, -99}, {:acc, 1}, {:jmp, -4}, {:acc, 6}])
       [0, 1, 2, 6, 7, 3, 4]
   """
+  @spec trace([instruction()]) :: [integer()]
   def trace(instructions) do
     {_result, trace} = execute_internal(instructions, 0, 0, [])
     Enum.reverse(trace)
   end
 
+  @spec swap_instruction(instruction()) :: instruction()
   defp swap_instruction({:jmp, val}), do: {:nop, val}
   defp swap_instruction({:nop, val}), do: {:jmp, val}
 
@@ -145,6 +156,7 @@ defmodule AdventOfCode.Day08 do
       iex> AdventOfCode.Day08.find_swap([{:nop, 0}, {:acc, 1}, {:jmp, 4}, {:acc, 3}, {:jmp, -3}, {:acc, -99}, {:acc, 1}, {:jmp, -4}, {:acc, 6}])
       {7, 8}
   """
+  @spec find_swap([instruction()]) :: {integer(), integer()}
   def find_swap(instructions) do
     # Start by tracing the unaltered program because only one instruction is modified so
     # it must be in the original program's flow. Possibly overkill, but it only adds one
