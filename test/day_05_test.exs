@@ -3,5 +3,4 @@ defmodule Day05Test do
   doctest AdventOfCode.Day05
 
   alias AdventOfCode.Day05
-
 end
