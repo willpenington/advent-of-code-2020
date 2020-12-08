@@ -33,13 +33,14 @@ defmodule AdventOfCode.Day02 do
     min = String.to_integer(min_str)
     max = String.to_integer(max_str)
 
-    {min, max, << char >>, password}
+    {min, max, <<char>>, password}
     %Record{from: min, to: max, char: <<char>>, password: password}
   end
 
   def password_matches_by_count(%Record{from: min, to: max, char: <<char>>, password: password}) do
-    char_count = String.to_charlist(password)
-    |> Enum.count(fn x -> x == char end)
+    char_count =
+      String.to_charlist(password)
+      |> Enum.count(fn x -> x == char end)
 
     min <= char_count and char_count <= max
   end
@@ -50,5 +51,4 @@ defmodule AdventOfCode.Day02 do
 
     (first_matches or last_matches) and not (first_matches and last_matches)
   end
-
 end

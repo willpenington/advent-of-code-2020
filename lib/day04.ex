@@ -1,12 +1,12 @@
 defmodule AdventOfCode.Day04 do
-
   alias AdventOfCode.Util
 
   @required_fields [:byr, :iyr, :eyr, :hgt, :hcl, :ecl, :pid]
 
   def process() do
-    passports_with_all_fields = load_data(["priv", "day04", "input"])
-    |> Enum.filter(&check_fields_exist/1)
+    passports_with_all_fields =
+      load_data(["priv", "day04", "input"])
+      |> Enum.filter(&check_fields_exist/1)
 
     IO.puts("Number of Passports with Required Fields: #{length(passports_with_all_fields)}")
 
@@ -47,7 +47,7 @@ defmodule AdventOfCode.Day04 do
   def parse_record(record) do
     String.split(record)
     |> Enum.map(&parse_field/1)
-    |> Map.new
+    |> Map.new()
   end
 
   defp load_data(path) do
@@ -77,6 +77,7 @@ defmodule AdventOfCode.Day04 do
   def validate_field(:byr, value), do: validate_year(value, 1920, 2002)
   def validate_field(:iyr, value), do: validate_year(value, 2010, 2020)
   def validate_field(:eyr, value), do: validate_year(value, 2020, 2030)
+
   def validate_field(:hgt, value) do
     case Integer.parse(value) do
       {height, "cm"} when height >= 150 and height <= 193 -> true
@@ -84,12 +85,17 @@ defmodule AdventOfCode.Day04 do
       _ -> false
     end
   end
+
   def validate_field(:hcl, colour), do: colour =~ ~r/^#[0-9a-f]{6}$/
-  def validate_field(:ecl, color) when color in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"], do: true
+
+  def validate_field(:ecl, color) when color in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
+    do: true
+
   def validate_field(:pid, <<number::binary-size(9)>>) do
     {_, tail} = Integer.parse(number)
     tail == ""
   end
+
   def validate_field(:cid, _), do: true
   def validate_field(_, _), do: false
 
@@ -110,5 +116,4 @@ defmodule AdventOfCode.Day04 do
   def validate_passport(passport) do
     Enum.all?(passport, fn {key, val} -> validate_field(key, val) end)
   end
-
 end

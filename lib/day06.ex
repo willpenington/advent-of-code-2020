@@ -1,5 +1,4 @@
 defmodule AdventOfCode.Day06 do
-
   alias AdventOfCode.Util
 
   @day_number 6
@@ -71,5 +70,4 @@ defmodule AdventOfCode.Day06 do
     |> Enum.reduce(&MapSet.intersection/2)
     |> MapSet.size()
   end
-
 end

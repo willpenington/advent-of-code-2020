@@ -8,22 +8,27 @@ defmodule AdventOfCode.Day08 do
   end
 
   def part1() do
-    {:loop, acc, _pc} = load_data()
-    |> execute()
+    {:loop, acc, _pc} =
+      load_data()
+      |> execute()
+
     acc
   end
 
   def part2() do
-    {_location, result} = load_data()
-    |> find_swap(0)
+    {_location, result} =
+      load_data()
+      |> find_swap(0)
+
     result
   end
 
   defp execute_internal(instructions, acc, pc, seen) do
     if MapSet.member?(seen, pc) do
-        {:loop, acc, pc}
+      {:loop, acc, pc}
     else
       seen = MapSet.put(seen, pc)
+
       case Enum.at(instructions, pc) do
         {:nop, _} -> execute_internal(instructions, acc, pc + 1, seen)
         {:acc, value} -> execute_internal(instructions, acc + value, pc + 1, seen)
@@ -42,7 +47,9 @@ defmodule AdventOfCode.Day08 do
 
   def find_swap(instructions, location \\ 0) do
     case Enum.at(instructions, location) do
-      {:acc, _} -> find_swap(instructions, location + 1)
+      {:acc, _} ->
+        find_swap(instructions, location + 1)
+
       {inst, val} ->
         List.replace_at(instructions, location, swap_instruction({inst, val}))
         |> execute()
@@ -66,5 +73,4 @@ defmodule AdventOfCode.Day08 do
       "nop" -> {:nop, String.to_integer(value)}
     end
   end
-
 end

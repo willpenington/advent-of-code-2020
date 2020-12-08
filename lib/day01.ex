@@ -35,8 +35,8 @@ defmodule AdventOfCode.Day01 do
 
   """
   def find_two_entries(values, target) do
-    (for x <- values, y <- values, x + y == target, do: x * y)
-    |> List.first
+    for(x <- values, y <- values, x + y == target, do: x * y)
+    |> List.first()
   end
 
   @doc ~S"""
@@ -53,7 +53,7 @@ defmodule AdventOfCode.Day01 do
 
   """
   def find_three_entries(values, target) do
-    (for x <- values, y <- values, z <- values, x + y + z == target, do: x * y * z)
-    |> List.first
+    for(x <- values, y <- values, z <- values, x + y + z == target, do: x * y * z)
+    |> List.first()
   end
 end

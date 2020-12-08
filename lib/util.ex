@@ -1,5 +1,4 @@
 defmodule AdventOfCode.Util do
-
   @moduledoc ~S"""
   Common functions for loading data
   """
@@ -36,10 +35,10 @@ defmodule AdventOfCode.Util do
   """
   @spec find_input(integer(), String.t()) :: [String.t()]
   def find_input(day, filename \\ "input") do
-    day_str = Integer.to_string(day)
-    |> String.pad_leading(2, "0")
+    day_str =
+      Integer.to_string(day)
+      |> String.pad_leading(2, "0")
 
     ["priv", "day#{day_str}", filename]
   end
-
 end

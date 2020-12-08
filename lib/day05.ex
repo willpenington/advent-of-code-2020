@@ -1,15 +1,15 @@
 defmodule AdventOfCode.Day05 do
-
   alias AdventOfCode.Util
 
   @doc ~S"""
   Run the Advent of Code tasks for Day 5
   """
   def process() do
-    seat_ids = Util.load_line_delimited_input(["priv", "day05", "input"])
-    |> Enum.map(&parse_boarding_pass/1)
-    |> Enum.map(&get_seat_id/1)
-    |> Enum.to_list()
+    seat_ids =
+      Util.load_line_delimited_input(["priv", "day05", "input"])
+      |> Enum.map(&parse_boarding_pass/1)
+      |> Enum.map(&get_seat_id/1)
+      |> Enum.to_list()
 
     IO.puts("Maximum Seat ID: #{Enum.max(seat_ids)}")
     IO.puts("My Seat ID: #{find_missing(seat_ids)}")
@@ -24,9 +24,11 @@ defmodule AdventOfCode.Day05 do
       44
   """
   def parse_value(value, true_char, false_char) do
-    {result, ""} =  String.replace(value, true_char, "1")
-    |> String.replace(false_char, "0")
-    |> Integer.parse(2)
+    {result, ""} =
+      String.replace(value, true_char, "1")
+      |> String.replace(false_char, "0")
+      |> Integer.parse(2)
+
     result
   end
 
@@ -63,6 +65,7 @@ defmodule AdventOfCode.Day05 do
   defp find_missing_helper([first, second | _]) when first == second - 2 do
     first + 1
   end
+
   defp find_missing_helper([_ | tail]), do: find_missing(tail)
   defp find_missing_helper([]), do: nil
 
@@ -88,5 +91,4 @@ defmodule AdventOfCode.Day05 do
     Enum.sort(seat_ids)
     |> find_missing_helper()
   end
-
 end
