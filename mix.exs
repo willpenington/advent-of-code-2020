@@ -8,7 +8,16 @@ defmodule AdventOfCode.Mixfile do
       elixir: "~> 1.0",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Docs
+      name: "Advent of Code 2020",
+      source_url: "https://github.com/willpenington/advent-of-code-2020",
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ]
+
     ]
   end
 
@@ -29,6 +38,9 @@ defmodule AdventOfCode.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      {:ex_doc, "~> 0.23", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+    ]
   end
 end
