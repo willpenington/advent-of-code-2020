@@ -1,6 +1,8 @@
 Advent Of Code 2020
 ============
 
+![Elixir CI](https://github.com/willpenington/advent-of-code-2020/workflows/Elixir%20CI/badge.svg?branch=main)
+
 Solutions to [Advent of Code 2020](https://adventofcode.com/2020/) in Elixir
 
 ## Getting Started
