@@ -52,7 +52,7 @@ a browser to view it.
 ## Type Checking
 Some modules have [typespec](https://hexdocs.pm/elixir/typespecs.html) annotations
 that indicate what functions expect and return. The types can be analyzed by
-(Dialixir)[https://hexdocs.pm/dialyxir/readme.html], an Elixir library for the
+[Dialixir](https://hexdocs.pm/dialyxir/readme.html), an Elixir library for the
 Erlang tool Dialyzer.
 
 To install Dialixier run `mix deps.get` and `mix deps.compile` if you haven't for 
