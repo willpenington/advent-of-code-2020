@@ -17,7 +17,22 @@ defmodule AdventOfCode.Day08 do
 
   @day_number 8
 
+  @typedoc """
+  Valid operation codes for the program.
+
+  Opcodes are stored as atoms for readability.
+  """
   @type opcode :: :nop | :acc | :jmp
+  @typedoc """
+  Program instructions
+
+  All operations have a common structure of an opcode and an integer value.
+  Values can be positive or negative and there is no known restriction on their
+  size.
+
+  `:nop` operations don't use the value but it must be retained as it is
+  important for recovering corrupted programs.
+  """
   @type instruction :: {opcode(), integer()}
 
   @doc ~S"""
