@@ -1,4 +1,8 @@
 defmodule AdventOfCode.Day03 do
+  @moduledoc """
+  Advent of Code Day 3: Toboggan Trajectory
+  """
+
   alias AdventOfCode.Util
 
   @routes [

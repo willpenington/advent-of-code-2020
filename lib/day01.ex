@@ -1,24 +1,45 @@
 defmodule AdventOfCode.Day01 do
+  @moduledoc """
+  Advent of Code Day 1: Report Repair
+  """
+
   alias AdventOfCode.Util
 
   @path ["priv", "day01", "input"]
 
   @target 2020
 
+
+  @doc ~S"""
+  Calculate and print the answers to both parts of the question
+  """
+  @spec process() :: nil
   def process() do
-    IO.puts("Part 1: #{part1()}, Part 2: #{part2()}")
+    data = load_data()
+
+    IO.puts("Part 1: #{part1(data)}, Part 2: #{part2(data)}")
   end
 
-  def part1() do
-    Util.load_line_delimited_input(@path)
-    |> Enum.map(&String.to_integer/1)
-    |> find_two_entries(@target)
+  @doc ~S"""
+  Find the product of two entries that sum to 2020
+  """
+  @spec part1([integer()]) :: integer()
+  def part1(data) do
+    find_two_entries(data, @target)
   end
 
-  def part2() do
+  @doc ~S"""
+  Find the product of three entries that sum to 2020
+  """
+  @spec part2([integer()]) :: integer()
+  def part2(data) do
+    find_three_entries(data, @target)
+  end
+
+  @spec load_data() :: integer()
+  def load_data() do
     Util.load_line_delimited_input(@path)
     |> Enum.map(&String.to_integer/1)
-    |> find_three_entries(@target)
   end
 
   @doc ~S"""
@@ -34,6 +55,7 @@ defmodule AdventOfCode.Day01 do
       514579
 
   """
+  @spec find_two_entries([integer()], integer()) :: integer()
   def find_two_entries(values, target) do
     for(x <- values, y <- values, x + y == target, do: x * y)
     |> List.first()
@@ -52,6 +74,7 @@ defmodule AdventOfCode.Day01 do
       241861950
 
   """
+  @spec find_three_entries([integer()], integer()) :: integer()
   def find_three_entries(values, target) do
     for(x <- values, y <- values, z <- values, x + y + z == target, do: x * y * z)
     |> List.first()
