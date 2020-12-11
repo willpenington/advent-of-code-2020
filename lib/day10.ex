@@ -7,7 +7,6 @@ defmodule AdventOfCode.Day10 do
 
   @day_number 10
 
-
   @doc ~S"""
   Calculate and print the answers to both parts of the question
   """
@@ -16,7 +15,6 @@ defmodule AdventOfCode.Day10 do
 
     IO.puts("Part 1: #{part1(adapters)}, Part 2: #{part2(adapters)}")
   end
-
 
   @doc ~S"""
   Calculate the answer to part 1
@@ -27,13 +25,13 @@ defmodule AdventOfCode.Day10 do
     sorted = Enum.sort(adapters)
     [first | _] = sorted
 
-    gaps = count_gaps(sorted)
-    |> Map.update(3, 1, fn x -> x + 1 end)
-    |> Map.update(first, 1, fn x -> x + 1 end)
+    gaps =
+      count_gaps(sorted)
+      |> Map.update(3, 1, fn x -> x + 1 end)
+      |> Map.update(first, 1, fn x -> x + 1 end)
 
     gaps[1] * gaps[3]
   end
-
 
   @doc ~S"""
   Calculate the answer to part 2
@@ -46,6 +44,7 @@ defmodule AdventOfCode.Day10 do
   end
 
   defp count_gaps_helper([_], acc), do: acc
+
   defp count_gaps_helper([current, next | tail], acc) do
     count_gaps_helper([next | tail], Map.update(acc, next - current, 1, fn x -> x + 1 end))
   end
@@ -81,17 +80,20 @@ defmodule AdventOfCode.Day10 do
   end
 
   defp count_combinations_helper(_, target, value, previous) when value > target, do: previous
+
   defp count_combinations_helper(adapters, target, value, previous) do
-    total = 1..3
-    |> Enum.map(fn difference ->
-      cond do
-        difference > value -> 0
-        difference == value and difference in adapters -> 1
-        value - difference in adapters -> Enum.at(previous, difference - 1)
-        true -> 0
-      end
-    end)
-    |> Enum.sum()
+    total =
+      1..3
+      |> Enum.map(fn difference ->
+        cond do
+          difference > value -> 0
+          difference == value and difference in adapters -> 1
+          (value - difference) in adapters -> Enum.at(previous, difference - 1)
+          true -> 0
+        end
+      end)
+      |> Enum.sum()
+
     # Slightly awkward but ordered to make tail call optimisation easier
     count_combinations_helper(adapters, target, value + 1, [total | previous])
   end

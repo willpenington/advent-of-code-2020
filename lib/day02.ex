@@ -17,7 +17,7 @@ defmodule AdventOfCode.Day02 do
   @doc ~S"""
   Calculate and print the answers to both parts of the question
   """
-  @spec process() :: nil
+  @spec process() :: :ok
   def process() do
     data = load_data()
 
@@ -26,7 +26,7 @@ defmodule AdventOfCode.Day02 do
 
   @spec part1([record()]) :: integer()
   def part1(data) do
-     Enum.count(data, &password_matches_by_count/1)
+    Enum.count(data, &password_matches_by_count/1)
   end
 
   @spec part2([record()]) :: integer()
@@ -66,6 +66,6 @@ defmodule AdventOfCode.Day02 do
   @spec load_data() :: [record()]
   def load_data() do
     Util.load_line_delimited_input(@path)
-    |> Stream.map(&extract_record/1)
+    |> Enum.map(&extract_record/1)
   end
 end

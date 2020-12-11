@@ -49,15 +49,19 @@ defmodule AdventOfCode.Day07 do
   end
 
   defp find_containing_helper(rules, name, seen) do
-    new_bags = Map.get(rules, name, [])
-    |> Enum.filter(fn x -> x not in seen end)
+    new_bags =
+      Map.get(rules, name, [])
+      |> Enum.filter(fn x -> x not in seen end)
 
     case new_bags do
-      [] -> MapSet.new(new_bags)
+      [] ->
+        MapSet.new(new_bags)
+
       val ->
-        #seen = MapSet.union(seen, new_bags)
+        # seen = MapSet.union(seen, new_bags)
         Enum.reduce(val, seen, fn bag, new_seen ->
           new_seen = MapSet.put(new_seen, bag)
+
           find_containing_helper(rules, bag, new_seen)
           |> MapSet.union(new_seen)
         end)
@@ -89,7 +93,9 @@ defmodule AdventOfCode.Day07 do
   end
 
   def parse_type(name) do
-    %{"adjective" => adjective, "colour" => colour} = Regex.named_captures(~r/^(?<adjective>[a-z]+) (?<colour>[a-z]+)/, name)
+    %{"adjective" => adjective, "colour" => colour} =
+      Regex.named_captures(~r/^(?<adjective>[a-z]+) (?<colour>[a-z]+)/, name)
+
     {adjective, colour}
   end
 
@@ -100,7 +106,9 @@ defmodule AdventOfCode.Day07 do
   def parse_contents(contents) do
     String.split(contents, ", ")
     |> Enum.map(fn val ->
-      %{"count" => count, "adjective" => adjective, "colour" => colour} = Regex.named_captures(~r/^(?<count>[0-9]+) (?<adjective>[a-z]+) (?<colour>[a-z]+)/, val)
+      %{"count" => count, "adjective" => adjective, "colour" => colour} =
+        Regex.named_captures(~r/^(?<count>[0-9]+) (?<adjective>[a-z]+) (?<colour>[a-z]+)/, val)
+
       {String.to_integer(count), adjective, colour}
     end)
   end
@@ -109,5 +117,4 @@ defmodule AdventOfCode.Day07 do
     [bag, contents] = String.split(rule, " contain ")
     {parse_type(bag), parse_contents(contents)}
   end
-
 end

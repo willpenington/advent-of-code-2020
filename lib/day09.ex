@@ -9,11 +9,10 @@ defmodule AdventOfCode.Day09 do
 
   @day_number 9
 
-
   @doc ~S"""
   Calculate and print the answers to both parts of the question
   """
-  @spec process() :: nil
+  @spec process() :: :ok
   def process() do
     data = load_data()
 
@@ -49,11 +48,14 @@ defmodule AdventOfCode.Day09 do
 
   @spec summing_pairs_helper([integer()], [integer()]) :: [{integer(), [{integer(), integer()}]}]
   defp summing_pairs_helper(_, []), do: []
+
   defp summing_pairs_helper(values, [target | tail]) do
     # x < y makes this more predictable for the sake of testing
-    pairs = (for x <- values, y <- values, x + y == target, x < y do
-      {x, y}
-    end)
+    pairs =
+      for x <- values, y <- values, x + y == target, x < y do
+        {x, y}
+      end
+
     preamble = [target | Enum.take(values, length(values) - 1)]
 
     [{target, pairs} | summing_pairs_helper(preamble, tail)]
@@ -86,15 +88,20 @@ defmodule AdventOfCode.Day09 do
     Enum.reverse(preamble)
     |> summing_pairs_helper(sequence)
   end
-  @spec find_weakness_helper(integer(), [integer()], integer(), integer(), integer()) :: integer()
+
+  @spec find_weakness_helper(integer(), [integer()], integer(), integer(), integer()) :: integer() | nil
   defp find_weakness_helper(acc, [val | tail], smallest, largest, target) do
     case acc + val do
-      ^target -> smallest + largest
-      x when x < target -> find_weakness_helper(x, tail, min(val, smallest), max(val, largest), target)
-      _ -> nil
+      ^target ->
+        smallest + largest
+
+      x when x < target ->
+        find_weakness_helper(x, tail, min(val, smallest), max(val, largest), target)
+
+      _ ->
+        nil
     end
   end
-
 
   @doc ~S"""
   Find the sum of the smallest and largest numbers in the first sub-sequence found in `values` that
@@ -110,13 +117,13 @@ defmodule AdventOfCode.Day09 do
   """
   @spec find_weakness([integer()], integer()) :: integer()
   def find_weakness(values, target)
+
   def find_weakness([val | tail], target) do
     case find_weakness_helper(val, tail, val, val, target) do
       nil -> find_weakness(tail, target)
       x -> x
     end
   end
-
 
   @doc ~S"""
   Load and parse the list of numbers from the input file.
@@ -127,5 +134,4 @@ defmodule AdventOfCode.Day09 do
     |> Util.load_line_delimited_input()
     |> Enum.map(&String.to_integer/1)
   end
-
 end

@@ -9,11 +9,10 @@ defmodule AdventOfCode.Day01 do
 
   @target 2020
 
-
   @doc ~S"""
   Calculate and print the answers to both parts of the question
   """
-  @spec process() :: nil
+  @spec process() :: :ok
   def process() do
     data = load_data()
 
@@ -36,7 +35,7 @@ defmodule AdventOfCode.Day01 do
     find_three_entries(data, @target)
   end
 
-  @spec load_data() :: integer()
+  @spec load_data() :: [integer()]
   def load_data() do
     Util.load_line_delimited_input(@path)
     |> Enum.map(&String.to_integer/1)

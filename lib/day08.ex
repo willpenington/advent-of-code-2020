@@ -100,7 +100,8 @@ defmodule AdventOfCode.Day08 do
     end
   end
 
-  @spec execute_internal([instruction()], integer(), integer(), [integer()]) :: {({:loop, integer(), integer()} | {:term, integer()}), [integer()]}
+  @spec execute_internal([instruction()], integer(), integer(), [integer()]) ::
+          {{:loop, integer(), integer()} | {:term, integer()}, [integer()]}
   defp execute_internal(instructions, acc, pc, seen) do
     if pc in seen do
       {{:loop, acc, pc}, seen}
