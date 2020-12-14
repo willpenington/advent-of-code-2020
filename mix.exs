@@ -39,7 +39,6 @@ defmodule AdventOfCode.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      #{:matrex, "~> 0.6.8"},
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     ]
