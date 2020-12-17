@@ -26,10 +26,7 @@ defmodule AdventOfCode.Day16 do
   end
 
   def valid_for_rule(val, {_, range1, range2}) do
-    in_range_1 = val in range1
-    in_range_2 = val in range2
-
-    in_range_1 or in_range_2
+    val in range1 or val in range2
   end
 
   def is_valid(ticket, rules) do
