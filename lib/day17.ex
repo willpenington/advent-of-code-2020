@@ -26,6 +26,9 @@ defmodule AdventOfCode.Day17 do
 
   defp step(world, _, step_count, step_count), do: world
   defp step(world, dimensions, step_count, step_number) do
+    # Converting the state of the world into a set makes for a more than order
+    # of magnitude speedup because of all the lookups
+    world = MapSet.new(world)
 
     Enum.flat_map(world, fn {x, y, z, w} ->
       [{x, y, z, w} | neighbours(x, y, z, w, dimensions)]
